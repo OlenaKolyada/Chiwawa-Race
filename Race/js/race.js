@@ -19,7 +19,7 @@ const userCar = {
 }
 
 // Selecting Color
-function selectColor(element, color) {
+function selectColor(element, color) { // don't get where the 'element' and 'color' came from
   element.addEventListener('click', function() {
   userCar.color = color;
   });
@@ -74,7 +74,7 @@ const carImages = {
 // Showing Final Car
 letsGo.addEventListener('click', function() {
   if(!document.querySelector('#result img')) {
-    const imageSrc = carImages[userCar.brand][userCar.color];
+    const imageSrc = carImages[userCar.brand][userCar.color]; // Why he is getting object properties like it was an array?
     if (imageSrc) {
       result.insertAdjacentHTML('beforeend', `<img src="img/${imageSrc}" />`);
     }
