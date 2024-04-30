@@ -1,28 +1,28 @@
 // Getting Constantas
-const red = document.querySelector('form:nth-of-type(1) p:nth-of-type(2) input:nth-of-type(1)');
-const blue = document.querySelector('form:nth-of-type(1) p:nth-of-type(2) input:nth-of-type(2)');
-const yellow = document.querySelector('form:nth-of-type(1) p:nth-of-type(2) input:nth-of-type(3)');
-const green = document.querySelector('form:nth-of-type(1) p:nth-of-type(2) input:nth-of-type(4)');
-const familiale = document.querySelector('form:nth-of-type(1) p:nth-of-type(4) input:nth-of-type(1)');
-const citadine = document.querySelector('form:nth-of-type(1) p:nth-of-type(4) input:nth-of-type(2)');
-const berline = document.querySelector('form:nth-of-type(1) p:nth-of-type(4) input:nth-of-type(3)');
-const mini = document.querySelector('form:nth-of-type(1) p:nth-of-type(4) input:nth-of-type(4)');
-const carResult = document.querySelector('#result');
-const nice = document.querySelector('#nice');
+var red = document.querySelector('form:nth-of-type(1) p:nth-of-type(2) input:nth-of-type(1)');
+var blue = document.querySelector('form:nth-of-type(1) p:nth-of-type(2) input:nth-of-type(2)');
+var yellow = document.querySelector('form:nth-of-type(1) p:nth-of-type(2) input:nth-of-type(3)');
+var green = document.querySelector('form:nth-of-type(1) p:nth-of-type(2) input:nth-of-type(4)');
+var familiale = document.querySelector('form:nth-of-type(1) p:nth-of-type(4) input:nth-of-type(1)');
+var citadine = document.querySelector('form:nth-of-type(1) p:nth-of-type(4) input:nth-of-type(2)');
+var berline = document.querySelector('form:nth-of-type(1) p:nth-of-type(4) input:nth-of-type(3)');
+var mini = document.querySelector('form:nth-of-type(1) p:nth-of-type(4) input:nth-of-type(4)');
+var carResult = document.querySelector('#result');
+var nice = document.querySelector('#nice');
 
 // User Car
-const userCar = {
+var userCar = {
   color: 'red',
   brand: 'Familiale',
   speed: undefined,
 }
 
-// Changing Color
+// Changing Color Function
 function changeCarColor(color) {
   userCar.color = color;
 }
 
-// Giving Colors By Click
+// Affecting Colors By Click
 red.addEventListener("click", function() {
   changeCarColor("red");
  });
@@ -39,29 +39,29 @@ green.addEventListener("click", function() {
   changeCarColor("green");
 });
 
-// Changing Brand
-function changeCarColor(color) {
-  userCar.color = color;
+// Changing Brand Function
+function changeCarBrand(brand) {
+  userCar.brand = brand;
 }
 
-// Giving Brand By Click
+// Affecting Brand By Click
 familiale.addEventListener("click", function() {
-  changeCarColor("Familiale");
+  changeCarBrand("Familiale");
  });
 
 citadine.addEventListener("click", function() {
-  changeCarColor("Citadine");
+  changeCarBrand("Citadine");
 });
 
 berline.addEventListener("click", function() {
-  changeCarColor("Berline");
+  changeCarBrand("Berline");
 });
 
 mini.addEventListener("click", function() {
-  changeCarColor("Mini");
+  changeCarBrand("Mini");
 });
 
-// Getting A Final Car Image
+// Getting A Final User Car Image
 nice.addEventListener('click', function() {
   if((userCar.color == 'blue') && (userCar.brand == 'mini')) {
     result.insertAdjacentHTML('beforeend', '<img src="img/mini-blue.png" />');
