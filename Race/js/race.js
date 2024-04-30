@@ -1,4 +1,4 @@
-// Получение констант
+// Getting Constantas
 const red = document.querySelector('form:nth-of-type(1) p:nth-of-type(2) input:nth-of-type(1)');
 const blue = document.querySelector('form:nth-of-type(1) p:nth-of-type(2) input:nth-of-type(2)');
 const yellow = document.querySelector('form:nth-of-type(1) p:nth-of-type(2) input:nth-of-type(3)');
@@ -10,19 +10,19 @@ const mini = document.querySelector('form:nth-of-type(1) p:nth-of-type(4) input:
 const carResult = document.querySelector('#result');
 const nice = document.querySelector('#nice');
 
-// Пользовательская машина
+// User Car
 const userCar = {
   color: 'red',
   brand: 'Familiale',
   speed: undefined,
 }
 
-// Функция изменения цвета
+// Changing Color
 function changeCarColor(color) {
   userCar.color = color;
 }
 
-// Присваивание цветов машине по клику
+// Giving Colors By Click
 red.addEventListener("click", function() {
   changeCarColor("red");
  });
@@ -39,12 +39,12 @@ green.addEventListener("click", function() {
   changeCarColor("green");
 });
 
-// Функция изменения бренда
+// Changing Brand
 function changeCarColor(color) {
   userCar.color = color;
 }
 
-// Присваивание бренда машине по клику
+// Giving Brand By Click
 familiale.addEventListener("click", function() {
   changeCarColor("Familiale");
  });
@@ -61,7 +61,7 @@ mini.addEventListener("click", function() {
   changeCarColor("Mini");
 });
 
-
+// Getting A Final Car Image
 nice.addEventListener('click', function() {
   if((userCar.color == 'blue') && (userCar.brand == 'mini')) {
     result.insertAdjacentHTML('beforeend', '<img src="img/mini-blue.png" />');
