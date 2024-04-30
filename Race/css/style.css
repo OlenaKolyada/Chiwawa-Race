@@ -1,0 +1,21 @@
+.main {
+    display: inline-block;
+    margin: 20px 100px 0 20px;
+    vertical-align: top;
+    border: 1px solid grey;
+}
+
+label {
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.form {
+    margin-bottom: 30px;
+}
+
+h4 {
+    border: 1px solid grey;
+    
+}
