@@ -1,82 +1,89 @@
 // Getting Constantas
-var red = document.querySelector('form:nth-of-type(1) p:nth-of-type(2) input:nth-of-type(1)');
-var blue = document.querySelector('form:nth-of-type(1) p:nth-of-type(2) input:nth-of-type(2)');
-var yellow = document.querySelector('form:nth-of-type(1) p:nth-of-type(2) input:nth-of-type(3)');
-var green = document.querySelector('form:nth-of-type(1) p:nth-of-type(2) input:nth-of-type(4)');
-var familiale = document.querySelector('form:nth-of-type(1) p:nth-of-type(4) input:nth-of-type(1)');
-var citadine = document.querySelector('form:nth-of-type(1) p:nth-of-type(4) input:nth-of-type(2)');
-var berline = document.querySelector('form:nth-of-type(1) p:nth-of-type(4) input:nth-of-type(3)');
-var mini = document.querySelector('form:nth-of-type(1) p:nth-of-type(4) input:nth-of-type(4)');
-var carResult = document.querySelector('#result');
-var nice = document.querySelector('#nice');
+const red = document.querySelector('form div input');
+const blue = document.querySelector('form div input:nth-of-type(2)');
+const yellow = document.querySelector('form div input:nth-of-type(3)');
+const green = document.querySelector('form div input:nth-of-type(4)');
+const familiale = document.querySelector('form div:nth-of-type(2) input:nth-of-type(1)');
+const citadine = document.querySelector('form div:nth-of-type(2) input:nth-of-type(2)');
+const berline = document.querySelector('form div:nth-of-type(2) input:nth-of-type(3)');
+const mini = document.querySelector('form div:nth-of-type(2) input:nth-of-type(4)');
+const carResult = document.querySelector('#result');
+const letsGo = document.querySelector('#lets__go');
+const reset = document.querySelector('#reset');
 
 // User Car
-var userCar = {
+const userCar = {
   color: 'red',
   brand: 'Familiale',
   speed: undefined,
 }
 
-// Changing Color Function
-function changeCarColor(color) {
+// Selecting Color
+function selectColor(element, color) {
+  element.addEventListener('click', function() {
   userCar.color = color;
-}
+  });
+};
 
-// Affecting Colors By Click
-red.addEventListener("click", function() {
-  changeCarColor("red");
- });
+selectColor(red, 'red');
+selectColor(blue, 'blue');
+selectColor(yellow, 'yellow');
+selectColor(green, 'green');
 
-blue.addEventListener("click", function() {
-  changeCarColor("blue");
-});
 
-yellow.addEventListener("click", function() {
-  changeCarColor("yellow");
-});
-
-green.addEventListener("click", function() {
-  changeCarColor("green");
-});
-
-// Changing Brand Function
-function changeCarBrand(brand) {
+// Selecting Brand
+function selectBrand(element, brand) {
+  element.addEventListener('click', function() {
   userCar.brand = brand;
-}
+  });
+};
 
-// Affecting Brand By Click
-familiale.addEventListener("click", function() {
-  changeCarBrand("Familiale");
- });
+selectBrand(familiale, 'Familiale');
+selectBrand(citadine, 'Citadine');
+selectBrand(berline, 'Berline');
+selectBrand(mini, 'Mini');
 
-citadine.addEventListener("click", function() {
-  changeCarBrand("Citadine");
+// Car Images
+const carImages = {
+  Familiale: {
+    red: 'familiale-red.png',
+    blue: 'familiale-blue.png',
+    yellow: 'familiale-yellow.png',
+    green: 'familiale-green.png'
+  },
+  Citadine: {
+    red: 'citadine-red.png',
+    blue: 'citadine-blue.png',
+    yellow: 'citadine-yellow.png',
+    green: 'citadine-green.png'
+  },
+  Berline: {
+    red: 'berline-red.png',
+    blue: 'berline-blue.png',
+    yellow: 'berline-yellow.png',
+    green: 'berline-green.png'
+  },
+  Mini: {
+    red: 'mini-red.png',
+    blue: 'mini-blue.png',
+    yellow: 'mini-yellow.png',
+    green: 'mini-green.png'
+  }
+};
+
+// Showing Final Car
+letsGo.addEventListener('click', function() {
+  if(!document.querySelector('#result img')) {
+    const imageSrc = carImages[userCar.brand][userCar.color];
+    if (imageSrc) {
+      result.insertAdjacentHTML('beforeend', `<img src="img/${imageSrc}" />`);
+    }
+  }
 });
 
-berline.addEventListener("click", function() {
-  changeCarBrand("Berline");
-});
-
-mini.addEventListener("click", function() {
-  changeCarBrand("Mini");
-});
-
-// Getting A Final User Car Image
-nice.addEventListener('click', function() {
-  if((userCar.color == 'blue') && (userCar.brand == 'mini')) {
-    result.insertAdjacentHTML('beforeend', '<img src="img/mini-blue.png" />');
+// Reset The Form
+reset.addEventListener('click', function(){
+  if (document.querySelector('#result img')) {
+    document.querySelector('#result img').remove();
   };
 });
-
-
-//console.log(userCar.color);
-
-
-
-
-
-
-
-
-
-
