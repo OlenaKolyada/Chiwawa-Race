@@ -12,15 +12,15 @@ const mini = document.querySelector('form div:nth-of-type(2) input:nth-of-type(4
 const btnCreate = document.querySelector('#btn__create');
 const btnReset = document.querySelector('#btn__reset');
 const divResult = document.querySelector('#result');
-let canvasRace = document.querySelector('canvas');
-let contextRace = canvasRace.getContext('2d');
+// let canvasRace = document.querySelector('canvas');
+// let contextRace = canvasRace.getContext('2d');
 
-let bg = new Image();
-bg.src = 'bg.png';
+// let bg = new Image();
+// bg.src = 'bg.png';
 
-function draw() {
-  contextRace.drawImage(bg, 0, 0);
-}
+// function draw() {
+//   contextRace.drawImage(bg, 0, 0);
+// }
 
 // First Car
 const firstCar = {
