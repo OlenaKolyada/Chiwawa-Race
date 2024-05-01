@@ -2,6 +2,7 @@
     display: inline-block;
     margin: 20px 50px 0 20px;
     vertical-align: top;
+    
 }
 
 label {
@@ -14,7 +15,10 @@ label {
     margin-bottom: 30px;
 }
 
-h4 {
-    margin-top: auto;
-    margin-bottom: 10px;
+
+#result {
+    
+    width: 420px;
+    height: 300px;
+    
 }
