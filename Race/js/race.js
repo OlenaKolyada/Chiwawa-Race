@@ -1,3 +1,5 @@
+'use strict'
+
 // Getting Constantas
 const red = document.querySelector('form div input');
 const blue = document.querySelector('form div input:nth-of-type(2)');
@@ -7,21 +9,41 @@ const familiale = document.querySelector('form div:nth-of-type(2) input:nth-of-t
 const citadine = document.querySelector('form div:nth-of-type(2) input:nth-of-type(2)');
 const berline = document.querySelector('form div:nth-of-type(2) input:nth-of-type(3)');
 const mini = document.querySelector('form div:nth-of-type(2) input:nth-of-type(4)');
-const carResult = document.querySelector('#result');
-const letsGo = document.querySelector('#lets__go');
-const reset = document.querySelector('#reset');
+const btnCreate = document.querySelector('#btn__create');
+const btnReset = document.querySelector('#btn__reset');
+const divResult = document.querySelector('#result');
+let canvasRace = document.querySelector('canvas');
+let contextRace = canvasRace.getContext('2d');
 
-// User Car
-const userCar = {
+let bg = new Image();
+bg.src = 'bg.png';
+
+function draw() {
+  contextRace.drawImage(bg, 0, 0);
+}
+
+// First Car
+const firstCar = {
   color: 'red',
   brand: 'Familiale',
   speed: undefined,
 }
 
+// Second Car
+const secondCar = Object.create(firstCar);
+
+// Third Car
+const thirdCar = Object.create(firstCar);
+
+// Fourth Car
+const fourthCar = Object.create(firstCar);
+
+
+
 // Selecting Color
 function selectColor(element, color) {
   element.addEventListener('click', function() {
-  userCar.color = color;
+  firstCar.color = color;
   });
 };
 
@@ -34,7 +56,7 @@ selectColor(green, 'green');
 // Selecting Brand
 function selectBrand(element, brand) {
   element.addEventListener('click', function() {
-  userCar.brand = brand;
+  firstCar.brand = brand;
   });
 };
 
@@ -71,21 +93,62 @@ const carImages = {
   }
 };
 
-// Showing Final Car
-letsGo.addEventListener('click', function() {
-  if(!document.querySelector('#result img')) {
-    const imageSrc = carImages[userCar.brand][userCar.color];
+// Creating Cars
+btnCreate.addEventListener('click', function() {
+  if(!document.querySelector('#result img:nth-of-type(1)')) {
+    const imageSrc = carImages[firstCar.brand][firstCar.color];
     if (imageSrc) {
-      result.insertAdjacentHTML('beforeend', `<img src="img/${imageSrc}" />`);
+      divResult.insertAdjacentHTML('beforeend', `<img src="img/${imageSrc}" /><br />`);
+    }
+  } else if((!document.querySelector('#result img:nth-of-type(2)'))) {
+    const imageSrc = carImages[secondCar.brand][secondCar.color];
+    if (imageSrc) {
+      divResult.insertAdjacentHTML('beforeend', `<img src="img/${imageSrc}" /><br />`);
+    }
+  } else if ((!document.querySelector('#result img:nth-of-type(3)'))) {
+    const imageSrc = carImages[thirdCar.brand][thirdCar.color];
+    if (imageSrc) {
+      divResult.insertAdjacentHTML('beforeend', `<img src="img/${imageSrc}" /><br />`);
+    }
+  } else if ((!document.querySelector('#result img:nth-of-type(4)'))) {
+    const imageSrc = carImages[fourthCar.brand][fourthCar.color];
+    if (imageSrc) {
+      divResult.insertAdjacentHTML('beforeend', `<img src="img/${imageSrc}" /><br />`);
     }
   }
 });
 
 // Reset The Form
-reset.addEventListener('click', function(){
+btnReset.addEventListener('click', function(){
   if (document.querySelector('#result img')) {
-    document.querySelector('#result img').remove();
-    userCar.color = 'red';
-    userCar.brand = 'Familiale';
+    for (let i = 4; i > 0; i--) {
+      document.querySelector(`#result img:nth-of-type(${i})`).remove();
+      document.querySelector(`#result br:nth-of-type(${i})`).remove();
+    }
+    firstCar.color = 'red';
+    firstCar.brand = 'Familiale';
   };
 });
+
+// btnReset.addEventListener('click', function(){
+//     if(document.querySelector('#result img')) {
+//       document.querySelector('#result').remove();
+//       firstCar.color = 'red';
+//       firstCar.brand = 'Familiale';
+//       document.querySelector('body').insertAdjacentHTML('beforeend', '<div class="main" id="result"></div>');
+//     };  
+// });
+
+//divResult.outerHTML = '<div class="main" id="result"></div>';
+
+// document.querySelector('#result img:nth-of-type(4)').remove();
+// document.querySelector('#result br:nth-of-type(4)').remove();
+
+// document.querySelector('#result img:nth-of-type(3)').remove();
+// document.querySelector('#result br:nth-of-type(3)').remove();
+
+// document.querySelector('#result img:nth-of-type(2)').remove();
+// document.querySelector('#result br:nth-of-type(2)').remove();
+
+// document.querySelector('#result img:nth-of-type(1)').remove();
+// document.querySelector('#result br:nth-of-type(1)').remove();
