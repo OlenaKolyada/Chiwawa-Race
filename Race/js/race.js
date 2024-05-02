@@ -1,91 +1,33 @@
 'use strict'
 
 // Getting Constantas
-const red = document.querySelector('form div input');
-const blue = document.querySelector('form div input:nth-of-type(2)');
-const yellow = document.querySelector('form div input:nth-of-type(3)');
-const green = document.querySelector('form div input:nth-of-type(4)');
-const familiale = document.querySelector('form div:nth-of-type(2) input:nth-of-type(1)');
-const citadine = document.querySelector('form div:nth-of-type(2) input:nth-of-type(2)');
-const berline = document.querySelector('form div:nth-of-type(2) input:nth-of-type(3)');
-const mini = document.querySelector('form div:nth-of-type(2) input:nth-of-type(4)');
 const btnCreate = document.querySelector('#btn__create');
+const btnRandom = document.querySelector('#btn__random');
 const btnReset = document.querySelector('#btn__reset');
-const divResult = document.querySelector('#result');
-// let canvasRace = document.querySelector('canvas');
-// let contextRace = canvasRace.getContext('2d');
+const btnStart = document.querySelector('#btn__start');
+const raceTrack = document.querySelector('#race__track');
 
-// let bg = new Image();
-// bg.src = 'bg.png';
-
-// function draw() {
-//   contextRace.drawImage(bg, 0, 0);
-// }
-
-// First Car
-const firstCar = {
-  color: 'red',
-  brand: 'Familiale',
-  speed: undefined,
-}
-
-// Second Car
-const secondCar = Object.create(firstCar);
-
-// Third Car
-const thirdCar = Object.create(firstCar);
-
-// Fourth Car
-const fourthCar = Object.create(firstCar);
-
-
-
-// Selecting Color
-function selectColor(element, color) {
-  element.addEventListener('click', function() {
-  firstCar.color = color;
-  });
-};
-
-selectColor(red, 'red');
-selectColor(blue, 'blue');
-selectColor(yellow, 'yellow');
-selectColor(green, 'green');
-
-
-// Selecting Brand
-function selectBrand(element, brand) {
-  element.addEventListener('click', function() {
-  firstCar.brand = brand;
-  });
-};
-
-selectBrand(familiale, 'Familiale');
-selectBrand(citadine, 'Citadine');
-selectBrand(berline, 'Berline');
-selectBrand(mini, 'Mini');
-
-// Car Images
+// Car Images Database
 const carImages = {
-  Familiale: {
-    red: 'familiale-red.png',
-    blue: 'familiale-blue.png',
-    yellow: 'familiale-yellow.png',
-    green: 'familiale-green.png'
+  rover : {
+    red: 'rover-red.png',
+    blue: 'rover-blue.png',
+    yellow: 'rover-yellow.png',
+    green: 'rover-green.png'
   },
-  Citadine: {
-    red: 'citadine-red.png',
-    blue: 'citadine-blue.png',
-    yellow: 'citadine-yellow.png',
-    green: 'citadine-green.png'
+  beetle: {
+    red: 'beetle-red.png',
+    blue: 'beetle-blue.png',
+    yellow: 'beetle-yellow.png',
+    green: 'beetle-green.png'
   },
-  Berline: {
-    red: 'berline-red.png',
-    blue: 'berline-blue.png',
-    yellow: 'berline-yellow.png',
-    green: 'berline-green.png'
+  tesla: {
+    red: 'tesla-red.png',
+    blue: 'tesla-blue.png',
+    yellow: 'tesla-yellow.png',
+    green: 'tesla-green.png'
   },
-  Mini: {
+  mini: {
     red: 'mini-red.png',
     blue: 'mini-blue.png',
     yellow: 'mini-yellow.png',
@@ -93,62 +35,233 @@ const carImages = {
   }
 };
 
+
+
+
+// Creatin Car Function
+function createCar() {
+
+  const brands = Object.keys(carImages);
+  const colors = Object.keys(carImages[brands[0]]);
+  const speeds = [3, 6, 9, 12];
+
+  let brandsCopy = [...brands];
+  let colorsCopy = [...colors];
+  let speedsCopy = [...speeds];
+
+  let brandInputValue = document.querySelector('.main form input[name=brand]:checked').value; 
+  let colorInputValue = document.querySelector('.main form input[name=color]:checked').value;
+  let speedIputValue = document.querySelector('.main form input[name=speed]:checked').value;
+
+// ??? How to make brands, colors, and speeds uniques? Doesn't work
+
+    if(arrCars.length < 4)  {
+    
+    const brandIndex = brandsCopy.indexOf(brandInputValue);
+    const brand = brandsCopy.splice(brandIndex, 1)[0];
+
+    const colorIndex = colorsCopy.indexOf(colorInputValue);
+    const color = colorsCopy.splice(colorIndex, 1)[0];
+
+    const speedIndex = speedsCopy.indexOf(parseInt(speedIputValue));
+    const speed = speedsCopy.splice(speedIndex, 1)[0];
+
+    const imageSrc = carImages[brandInputValue][colorInputValue];
+    const carElement = document.createElement('img');
+    carElement.src = "img/" + imageSrc;
+    raceTrack.appendChild(carElement);
+
+    const newCar = {
+        brand: brand,
+        color: color,
+        speed: speed,
+        element: carElement
+    };
+    arrCars.push(newCar);
+
+    
+}
+}
+
+  // if(arrCars.length < 4) {
+  //   const imageSrc = carImages[brandInputValue][colorInputValue];
+  //   const carElement = document.createElement('img');
+  //   carElement.src = "img/" + imageSrc;
+  //   raceTrack.appendChild(carElement);
+    
+  //   const newCar = {
+  //     brand : brandInputValue,
+  //     color : colorInputValue,
+  //     speed : speedIputValue,
+  //     element : carElement,
+  //   };
+  
+  //   arrCars.push(newCar);
+  // }
+
+
 // Creating Cars
-btnCreate.addEventListener('click', function() {
-  if(!document.querySelector('#result img:nth-of-type(1)')) {
-    const imageSrc = carImages[firstCar.brand][firstCar.color];
-    if (imageSrc) {
-      divResult.insertAdjacentHTML('beforeend', `<img src="img/${imageSrc}" /><br />`);
-    }
-  } else if((!document.querySelector('#result img:nth-of-type(2)'))) {
-    const imageSrc = carImages[secondCar.brand][secondCar.color];
-    if (imageSrc) {
-      divResult.insertAdjacentHTML('beforeend', `<img src="img/${imageSrc}" /><br />`);
-    }
-  } else if ((!document.querySelector('#result img:nth-of-type(3)'))) {
-    const imageSrc = carImages[thirdCar.brand][thirdCar.color];
-    if (imageSrc) {
-      divResult.insertAdjacentHTML('beforeend', `<img src="img/${imageSrc}" /><br />`);
-    }
-  } else if ((!document.querySelector('#result img:nth-of-type(4)'))) {
-    const imageSrc = carImages[fourthCar.brand][fourthCar.color];
-    if (imageSrc) {
-      divResult.insertAdjacentHTML('beforeend', `<img src="img/${imageSrc}" /><br />`);
-    }
-  }
-});
+let arrCars = [];
+btnCreate.addEventListener('click', createCar);
 
-// Reset The Form
-btnReset.addEventListener('click', function(){
-  if (document.querySelector('#result img')) {
-    for (let i = 4; i > 0; i--) {
-      document.querySelector(`#result img:nth-of-type(${i})`).remove();
-      document.querySelector(`#result br:nth-of-type(${i})`).remove();
-    }
-    firstCar.color = 'red';
-    firstCar.brand = 'Familiale';
+// Random Creation
+btnRandom.addEventListener('click', function() {
+  
+  const brands = Object.keys(carImages);
+  const colors = Object.keys(carImages[brands[0]]);
+  const speeds = [3, 6, 9, 12];
+
+  let availableBrands = [...brands];
+  let availableColors = [...colors];
+  let availableSpeeds = [...speeds];
+
+  if(arrCars.length < 4) {
+  for (let i = 0; i < 4; i++) {
+
+      const brandIndex = Math.floor(Math.random() * availableBrands.length);
+      const brand = availableBrands.splice(brandIndex, 1)[0];
+
+      const colorIndex = Math.floor(Math.random() * availableColors.length);
+      const color = availableColors.splice(colorIndex, 1)[0];
+
+      const speedIndex = Math.floor(Math.random() * availableSpeeds.length);
+      const speed = availableSpeeds.splice(speedIndex, 1)[0];
+
+      const imageSrc = carImages[brand][color];
+      const carElement = document.createElement('img');
+      carElement.src = "img/" + imageSrc;
+      raceTrack.appendChild(carElement);
+
+      const newCar = {
+          brand: brand,
+          color: color,
+          speed: speed,
+          element: carElement
+      };
+      arrCars.push(newCar);
   };
+};
 });
 
-// btnReset.addEventListener('click', function(){
-//     if(document.querySelector('#result img')) {
-//       document.querySelector('#result').remove();
-//       firstCar.color = 'red';
-//       firstCar.brand = 'Familiale';
-//       document.querySelector('body').insertAdjacentHTML('beforeend', '<div class="main" id="result"></div>');
-//     };  
+
+// Starting A Race
+btnStart.addEventListener('click', function() {
+  if(arrCars.length === 4) {
+ 
+  let stoppedCarsCount = 0; 
+
+  function moveCar(car) {
+      let posCar = 10;
+      let carSpeed = parseInt(car.speed);
+
+      function move() {
+          posCar += carSpeed;
+          if (posCar < window.innerWidth - 800) {
+              car.element.style.left = posCar + 'px';
+              requestAnimationFrame(move);
+          } else {
+              
+              stoppedCarsCount++;
+              
+              if (stoppedCarsCount === 1) {
+                  stopBackground();
+              };
+          };
+      };
+
+      move();
+  };
+
+  arrCars.forEach(moveCar);
+
+  let posBackground = 0;
+  let backgroundAnimationId;
+
+  function moveBackground() {
+      posBackground -= 1;
+      raceTrack.style.backgroundPositionX = posBackground + 'px';
+      backgroundAnimationId = requestAnimationFrame(moveBackground);
+  };
+
+  moveBackground();
+
+  function stopBackground() {
+      cancelAnimationFrame(backgroundAnimationId);
+  };
+};
+});
+
+
+// Reset
+btnReset.addEventListener('click', function(){
+  const createdCarsList = document.querySelectorAll('#race__track img'); 
+    createdCarsList.forEach(function(carElement) { 
+      carElement.remove(); 
+      
+    });
+    
+    stopBackground(); // ??? Working but gives an error
+    arrCars = [];
+    btnCreate.addEventListener('click', createCar);
+  });
+  
+
+
+// const firstCar = arrCars[0];
+// const secondCar = arrCars[1];
+// const thirdCar = arrCars[2];
+// const fourthCar = arrCars[3];
+
+// Starting A Race
+// btnStart.addEventListener('click', function() { 
+
+//   let posCar = 10;
+
+//   function moveFirstCar(firstCar) {
+//     let firstCar = document.querySelector('#race__track img:nth-child(1)');
+//     posCar++;
+//     firstCar.style.left = posCar + 'px';
+//     setTimeout(moveFirstCar, 3, firstCar);
+//   }
+
+//   function moveSecondCar(secondCar) {
+//     let secondCar = document.querySelector('#race__track img:nth-child(2)');
+//     posCar++;
+//     secondCar.style.left = posCar + 'px';
+//     setTimeout(moveSecondCar, 6, secondCar);
+//   }
+
+//   function moveThirdCar(thirdCar) {
+//     let thirdCar = document.querySelector('#race__track img:nth-child(3)');
+//     posCar++;
+//     thirdCar.style.left = posCar + 'px';
+//     setTimeout(moveThirdCar, 9, thirdCar);
+//   }
+
+//   function moveFourthCar(FourthCar) {
+//     let FourthCar = document.querySelector('#race__track img:nth-child(4)');
+//     posCar++;
+//     fourthCar.style.left = posCar + 'px';
+//     setTimeout(moveFourthCar, 40, fourthCar);
+//   }
+
+
+  // if (firstCar && secondCar && thirdCar && fourthCar) {
+  //   moveFisrtCar();
+  //   moveSecondCar();
+  //   moveThirdCar();
+  //   moveFourthCar();
+  // };
+  
+  
+
+
 // });
 
-//divResult.outerHTML = '<div class="main" id="result"></div>';
 
-// document.querySelector('#result img:nth-of-type(4)').remove();
-// document.querySelector('#result br:nth-of-type(4)').remove();
 
-// document.querySelector('#result img:nth-of-type(3)').remove();
-// document.querySelector('#result br:nth-of-type(3)').remove();
 
-// document.querySelector('#result img:nth-of-type(2)').remove();
-// document.querySelector('#result br:nth-of-type(2)').remove();
 
-// document.querySelector('#result img:nth-of-type(1)').remove();
-// document.querySelector('#result br:nth-of-type(1)').remove();
+
+
+
