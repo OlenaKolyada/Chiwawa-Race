@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script defer src="js/race.js"></script>
+    
     <link rel="stylesheet" href="css/style.css">
     
     <title>Race</title>
@@ -11,31 +12,43 @@
   <body>
     <div class="main">
       <form>
-        <div class="form"><label for="color">Choose your color:</label><br>
-        <input type="radio" checked name="color" value="Red">Red
-        <input type="radio" name="color" value="Blue">Blue
-        <input type="radio" name="color" value="Yellow">Yellow
-        <input type="radio" name="color" value="Green">Green
+        <div class="form"><label for="brand">Choose Brand:</label><br>
+          <input type="radio" checked name="brand" value="rover">Range Rover
+          <input type="radio" name="brand" value="beetle">Volkswagen Beetle
+          <input type="radio" name="brand" value="tesla">Tesla
+          <input type="radio" name="brand" value="mini">Mini
         </div>
 
-        <div class="form"><label for="brand">Choose your brand:</label><br>
-        <input type="radio" checked name="brand" value="Familiale">Familiale
-        <input type="radio" name="brand" value="Citadine">Citadine
-        <input type="radio" name="brand" value="Berline">Berline
-        <input type="radio" name="brand" value="Mini">Mini
+        <div class="form"><label for="color">Choose Color:</label><br>
+          <input type="radio" checked name="color" value="red">Red
+          <input type="radio" name="color" value="blue">Blue
+          <input type="radio" name="color" value="yellow">Yellow
+          <input type="radio" name="color" value="green">Green
+        </div>
+
+        <div class="form"><label for="speed">Choose Speed:</label><br>
+          <input type="radio" checked name="speed" value="3">Chihuahua
+          <input type="radio" name="speed" value="6">Corgi
+          <input type="radio" name="speed" value="9">Labrador
+          <input type="radio" name="speed" value="12">Greyhound
         </div>
 
         <p><button id="btn__create" type="button">Create a Car</button>
-        <input type="reset" value="Reset" id="btn__reset">
+          <button id="btn__random" type="button">Random</button>
+          <input type="reset" value="Reset" id="btn__reset">
+          <button id="btn__start" type="button">Start a Race!</button>
         </p>
       </form>
     </div>
    
-    <div class="main" id="result">
+    
+    
+    <div class="main" id="race__track">
       
     </div>
-    
 
+    
+    
   </body>
 </html>
 
