@@ -25,7 +25,7 @@ const carImages = {
     Tomato: 'rover-red.png',
     Blueberry: 'rover-blue.png',
     Banana: 'rover-yellow.png',
-    green: 'rover-green.png'
+    Avocado: 'rover-green.png'
   },
   beetle: {
     Tomato: 'beetle-red.png',
