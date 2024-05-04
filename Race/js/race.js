@@ -6,107 +6,124 @@ const btnRandom = document.querySelector('#btn__random');
 const btnReset = document.querySelector('#btn__reset');
 const btnStart = document.querySelector('#btn__start');
 const raceTrack = document.querySelector('#race__track');
+const userMessage = document.querySelector('#user__message');
+const radioButtons = document.querySelectorAll('input[type="radio"]');
+const finish = window.innerWidth - 800;
+
+
+// Default State
+btnReset.disabled = true;
+btnStart.disabled = true;
+
+let arrCars = [];
+let arrWinners = [];
+
 
 // Car Images Database
 const carImages = {
   rover : {
-    red: 'rover-red.png',
-    blue: 'rover-blue.png',
-    yellow: 'rover-yellow.png',
+    Tomato: 'rover-red.png',
+    Blueberry: 'rover-blue.png',
+    Banana: 'rover-yellow.png',
     green: 'rover-green.png'
   },
   beetle: {
-    red: 'beetle-red.png',
-    blue: 'beetle-blue.png',
-    yellow: 'beetle-yellow.png',
-    green: 'beetle-green.png'
+    Tomato: 'beetle-red.png',
+    Blueberry: 'beetle-blue.png',
+    Banana: 'beetle-yellow.png',
+    Avocado: 'beetle-green.png'
   },
   tesla: {
-    red: 'tesla-red.png',
-    blue: 'tesla-blue.png',
-    yellow: 'tesla-yellow.png',
-    green: 'tesla-green.png'
+    Tomato: 'tesla-red.png',
+    Blueberry: 'tesla-blue.png',
+    Banana: 'tesla-yellow.png',
+    Avocado: 'tesla-green.png'
   },
   mini: {
-    red: 'mini-red.png',
-    blue: 'mini-blue.png',
-    yellow: 'mini-yellow.png',
-    green: 'mini-green.png'
+    Tomato: 'mini-red.png',
+    Blueberry: 'mini-blue.png',
+    Banana: 'mini-yellow.png',
+    Avocado: 'mini-green.png'
   }
 };
 
 
-
-
-// Creatin Car Function
-function createCar() {
-
-  const brands = Object.keys(carImages);
-  const colors = Object.keys(carImages[brands[0]]);
-  const speeds = [3, 6, 9, 12];
-
-  let brandsCopy = [...brands];
-  let colorsCopy = [...colors];
-  let speedsCopy = [...speeds];
+// Create Button
+btnCreate.addEventListener('click', function() {
 
   let brandInputValue = document.querySelector('.main form input[name=brand]:checked').value; 
   let colorInputValue = document.querySelector('.main form input[name=color]:checked').value;
   let speedIputValue = document.querySelector('.main form input[name=speed]:checked').value;
 
-// ??? How to make brands, colors, and speeds uniques? Doesn't work
-
     if(arrCars.length < 4)  {
+      btnRandom.disabled = true;
+      btnReset.disabled = false;
+      const imageSrc = carImages[brandInputValue][colorInputValue];
+      const carImage = document.createElement('img');
+      carImage.src = "img/" + imageSrc;
+      raceTrack.appendChild(carImage);
     
-    const brandIndex = brandsCopy.indexOf(brandInputValue);
-    const brand = brandsCopy.splice(brandIndex, 1)[0];
-
-    const colorIndex = colorsCopy.indexOf(colorInputValue);
-    const color = colorsCopy.splice(colorIndex, 1)[0];
-
-    const speedIndex = speedsCopy.indexOf(parseInt(speedIputValue));
-    const speed = speedsCopy.splice(speedIndex, 1)[0];
-
-    const imageSrc = carImages[brandInputValue][colorInputValue];
-    const carElement = document.createElement('img');
-    carElement.src = "img/" + imageSrc;
-    raceTrack.appendChild(carElement);
-
     const newCar = {
-        brand: brand,
-        color: color,
-        speed: speed,
-        element: carElement
-    };
+        brand: brandInputValue,
+        color: colorInputValue,
+        speed: speedIputValue,
+        image: carImage,
+        position: 10,
+      };
     arrCars.push(newCar);
 
+    if(arrCars.length === 4) {
+      btnStart.disabled = false;
+      btnCreate.disabled = true;
+      userMessage.textContent = 'Ready to Go!';
+    } else {
+      btnStart.disabled = true;
+    };
+
     
-}
-}
-
-  // if(arrCars.length < 4) {
-  //   const imageSrc = carImages[brandInputValue][colorInputValue];
-  //   const carElement = document.createElement('img');
-  //   carElement.src = "img/" + imageSrc;
-  //   raceTrack.appendChild(carElement);
+    const nextColorInput = document.querySelector('.main form input[name=color]:checked + input[name=color]');
+    const nextSpeedInput = document.querySelector('.main form input[name=speed]:checked + input[name=speed]');
+    const currentBrandInput = document.querySelector('.main form input[name=brand]:checked');
+    const nextBrandInput = document.querySelector('.main form input[name=brand]:checked + input[name=brand]');
+    const currentColorInput = document.querySelector('.main form input[name=color]:checked');
+    const currentSpeedInput = document.querySelector('.main form input[name=speed]:checked');
+    const firstBrandInput = document.querySelector('.main form input[name=brand]:first-of-type');
+    const firstColorInput = document.querySelector('.main form input[name=color]:first-of-type');
+    const firstSpeedInput = document.querySelector('.main form input[name=speed]:first-of-type');
     
-  //   const newCar = {
-  //     brand : brandInputValue,
-  //     color : colorInputValue,
-  //     speed : speedIputValue,
-  //     element : carElement,
-  //   };
-  
-  //   arrCars.push(newCar);
-  // }
 
+    if (nextBrandInput && nextColorInput && nextSpeedInput) {
+      nextBrandInput.checked = true;
+      currentBrandInput.disabled = true;
+      nextColorInput.checked = true;
+      currentColorInput.disabled = true;
+      nextSpeedInput.checked = true;
+      currentSpeedInput.disabled = true;
+    } else {
+      firstBrandInput.checked = true;
+      currentBrandInput.disabled = true;
+      firstColorInput.checked = true;
+      currentColorInput.disabled = true;
+      firstSpeedInput.checked = true;
+      currentSpeedInput.disabled = true;
+    };
+};
+});
+ 
 
-// Creating Cars
-let arrCars = [];
-btnCreate.addEventListener('click', createCar);
-
-// Random Creation
+// Random Button
 btnRandom.addEventListener('click', function() {
   
+  btnCreate.disabled = true;
+  btnRandom.disabled = true;
+  btnReset.disabled = false;
+  btnStart.disabled = false;
+
+  radioButtons.forEach(function(unableButtons) {
+    unableButtons.disabled = true;
+    
+  })
+  userMessage.textContent = 'Ready to Go!';
   const brands = Object.keys(carImages);
   const colors = Object.keys(carImages[brands[0]]);
   const speeds = [3, 6, 9, 12];
@@ -128,15 +145,16 @@ btnRandom.addEventListener('click', function() {
       const speed = availableSpeeds.splice(speedIndex, 1)[0];
 
       const imageSrc = carImages[brand][color];
-      const carElement = document.createElement('img');
-      carElement.src = "img/" + imageSrc;
-      raceTrack.appendChild(carElement);
+      const carImage = document.createElement('img');
+      carImage.src = "img/" + imageSrc;
+      raceTrack.appendChild(carImage);
 
       const newCar = {
           brand: brand,
           color: color,
           speed: speed,
-          element: carElement
+          image: carImage,
+          position: 10,
       };
       arrCars.push(newCar);
   };
@@ -144,124 +162,109 @@ btnRandom.addEventListener('click', function() {
 });
 
 
-// Starting A Race
-btnStart.addEventListener('click', function() {
-  if(arrCars.length === 4) {
- 
-  let stoppedCarsCount = 0; 
+// Reset Button
+btnReset.addEventListener('click', function(){
 
-  function moveCar(car) {
-      let posCar = 10;
+  btnCreate.disabled = false;
+  btnRandom.disabled = false;
+  btnReset.disabled = true;
+  btnStart.disabled = true;
+  
+
+  userMessage.textContent = 'One more time?';
+  const createdCarsList = document.querySelectorAll('#race__track img'); 
+    createdCarsList.forEach(function(carImage) { 
+      carImage.remove(); 
+    });
+    
+    stopBG(); 
+    arrCars = [];
+   
+    radioButtons.forEach(function(unableButtons) {
+      unableButtons.disabled = false;
+      
+  })
+});
+
+
+// Start Button
+btnStart.addEventListener('click', function() {
+
+  btnCreate.disabled = true;
+  btnRandom.disabled = true;
+  btnReset.disabled = true;
+  btnStart.disabled = true;
+  
+  
+  userMessage.textContent = 'Who is The Winner?';
+  if(arrCars.length === 4) {
+    
+    
+    function moveCar(car) {
+      let posCar = car.position;
       let carSpeed = parseInt(car.speed);
 
       function move() {
-          posCar += carSpeed;
-          if (posCar < window.innerWidth - 800) {
-              car.element.style.left = posCar + 'px';
-              requestAnimationFrame(move);
-          } else {
+        posCar += carSpeed;
+        car.position = posCar;
+
+          if (posCar >= finish) {
+            car.position = finish;
+            
+            const newWinner = {
+              brand: car.brand,
+              color: car.color,
+              speed: car.speed,
+              image: car.carImage,
+              position: finish,
+            }
+            arrWinners.push(newWinner);
+              stopBG();
+                
+              } else {
+            car.image.style.left = posCar + 'px';
+            if(posCar < finish) {
+            requestAnimationFrame(move);
+            }
+            }
+            if(arrWinners.length === 4) {
+              userMessage.innerHTML = 'Winner: ' + arrWinners[0].color + '<br>Second place: ' + arrWinners[1].color + '<br>Third place: ' + arrWinners[2].color;
+              btnReset.disabled = false;
+
+              arrWinners.forEach((winner, index) => {
+                const winnerNumberImage = document.createElement('img');
+                winnerNumberImage.src = `img/${index + 1}.png`; 
+                winnerNumberImage.className = 'winner-number';
+                winner.image.appendChild(winnerNumberImage); 
+              });
               
-              stoppedCarsCount++;
-              
-              if (stoppedCarsCount === 1) {
-                  stopBackground();
-              };
-          };
-      };
 
-      move();
-  };
+            }
 
-  arrCars.forEach(moveCar);
+            
+            };
+  
+move();
+};
 
-  let posBackground = 0;
-  let backgroundAnimationId;
+arrCars.forEach(moveCar);
+moveBG();
 
-  function moveBackground() {
-      posBackground -= 1;
-      raceTrack.style.backgroundPositionX = posBackground + 'px';
-      backgroundAnimationId = requestAnimationFrame(moveBackground);
-  };
 
-  moveBackground();
-
-  function stopBackground() {
-      cancelAnimationFrame(backgroundAnimationId);
-  };
 };
 });
 
 
-// Reset
-btnReset.addEventListener('click', function(){
-  const createdCarsList = document.querySelectorAll('#race__track img'); 
-    createdCarsList.forEach(function(carElement) { 
-      carElement.remove(); 
-      
-    });
-    
-    stopBackground(); // ??? Working but gives an error
-    arrCars = [];
-    btnCreate.addEventListener('click', createCar);
-  });
-  
+// Background Movement Functions
+let posBG = 0;
+let bgAnimation;
 
+function moveBG() {
+  posBG -= 1;
+  raceTrack.style.backgroundPositionX = posBG + 'px';
+  bgAnimation = requestAnimationFrame(moveBG);
+};
 
-// const firstCar = arrCars[0];
-// const secondCar = arrCars[1];
-// const thirdCar = arrCars[2];
-// const fourthCar = arrCars[3];
-
-// Starting A Race
-// btnStart.addEventListener('click', function() { 
-
-//   let posCar = 10;
-
-//   function moveFirstCar(firstCar) {
-//     let firstCar = document.querySelector('#race__track img:nth-child(1)');
-//     posCar++;
-//     firstCar.style.left = posCar + 'px';
-//     setTimeout(moveFirstCar, 3, firstCar);
-//   }
-
-//   function moveSecondCar(secondCar) {
-//     let secondCar = document.querySelector('#race__track img:nth-child(2)');
-//     posCar++;
-//     secondCar.style.left = posCar + 'px';
-//     setTimeout(moveSecondCar, 6, secondCar);
-//   }
-
-//   function moveThirdCar(thirdCar) {
-//     let thirdCar = document.querySelector('#race__track img:nth-child(3)');
-//     posCar++;
-//     thirdCar.style.left = posCar + 'px';
-//     setTimeout(moveThirdCar, 9, thirdCar);
-//   }
-
-//   function moveFourthCar(FourthCar) {
-//     let FourthCar = document.querySelector('#race__track img:nth-child(4)');
-//     posCar++;
-//     fourthCar.style.left = posCar + 'px';
-//     setTimeout(moveFourthCar, 40, fourthCar);
-//   }
-
-
-  // if (firstCar && secondCar && thirdCar && fourthCar) {
-  //   moveFisrtCar();
-  //   moveSecondCar();
-  //   moveThirdCar();
-  //   moveFourthCar();
-  // };
-  
-  
-
-
-// });
-
-
-
-
-
-
-
-
+function stopBG() {
+  cancelAnimationFrame(bgAnimation);
+};
