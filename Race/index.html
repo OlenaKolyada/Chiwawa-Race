@@ -10,7 +10,13 @@
     <title>Race</title>
   </head>
   <body>
+    
     <div class="main">
+      <div id="user__message">
+        Hi! Wanna play?<br />
+        Choose your cars!
+
+      </div>
       <form>
         <div class="form"><label for="brand">Choose Brand:</label><br>
           <input type="radio" checked name="brand" value="rover">Range Rover
@@ -20,10 +26,10 @@
         </div>
 
         <div class="form"><label for="color">Choose Color:</label><br>
-          <input type="radio" checked name="color" value="red">Red
-          <input type="radio" name="color" value="blue">Blue
-          <input type="radio" name="color" value="yellow">Yellow
-          <input type="radio" name="color" value="green">Green
+          <input type="radio" checked name="color" value="Tomato">Tomato
+          <input type="radio" name="color" value="Blueberry">Blueberry
+          <input type="radio" name="color" value="Banana">Banana
+          <input type="radio" name="color" value="Avocado">Avocado
         </div>
 
         <div class="form"><label for="speed">Choose Speed:</label><br>
@@ -33,10 +39,11 @@
           <input type="radio" name="speed" value="12">Greyhound
         </div>
 
-        <p><button id="btn__create" type="button">Create a Car</button>
+        <p><button id="btn__create" type="button">Create</button>
           <button id="btn__random" type="button">Random</button>
           <input type="reset" value="Reset" id="btn__reset">
-          <button id="btn__start" type="button">Start a Race!</button>
+          <button id="btn__start" type="button">Start</button>
+          
         </p>
       </form>
     </div>
