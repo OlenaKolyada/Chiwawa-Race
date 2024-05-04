@@ -5,7 +5,7 @@
     
 }
 
-label {
+form .form label:first-of-type {
     font-weight: bold;
     display: inline-block;
     margin-bottom: 10px;
@@ -15,14 +15,30 @@ label {
     margin-bottom: 30px;
 }
 
+#user__message {
+    margin-bottom: 30px;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    color: #141313;
+    font-size: large;
+    text-align: center;
+    background-color: #f2ecdb;
+    height: 60px;
+}
+
 
 #race__track {
     background-image: url('../img/bg.png');
     width: 900px;
     height: 300px;
     position: relative;
-    
+    border-radius: 5px;
+    margin-top: 30px;
 }
+
 #race__track img:nth-of-type(1) {
     position: absolute;
     top : 60px;
@@ -43,4 +59,5 @@ label {
     top : 240px;
     left : 10px;
 }
+
 
