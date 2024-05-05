@@ -51,22 +51,22 @@ const carImages = {
 // Create Button
 btnCreate.addEventListener('click', function() {
 
-  let brandInputValue = document.querySelector('.main form input[name=brand]:checked').value; 
-  let colorInputValue = document.querySelector('.main form input[name=color]:checked').value;
-  let speedIputValue = document.querySelector('.main form input[name=speed]:checked').value;
+  let brandInput = document.querySelector('.main form input[name=brand]:checked'); 
+  let colorInput = document.querySelector('.main form input[name=color]:checked');
+  let speedInput = document.querySelector('.main form input[name=speed]:checked');
 
     if(arrCars.length < 4)  {
       btnRandom.disabled = true;
       btnReset.disabled = false;
-      const imageSrc = carImages[brandInputValue][colorInputValue];
+      const imageSrc = carImages[brandInput.value][colorInput.value];
       const carImage = document.createElement('img');
       carImage.src = "img/" + imageSrc;
       raceTrack.appendChild(carImage);
     
     const newCar = {
-        brand: brandInputValue,
-        color: colorInputValue,
-        speed: speedIputValue,
+        brand: brandInput.value,
+        color: colorInput.value,
+        speed: speedInput.value,
         image: carImage,
         position: 10,
       };
@@ -80,33 +80,12 @@ btnCreate.addEventListener('click', function() {
       btnStart.disabled = true;
     };
 
-    
-    const nextColorInput = document.querySelector('.main form input[name=color]:checked + input[name=color]');
-    const nextSpeedInput = document.querySelector('.main form input[name=speed]:checked + input[name=speed]');
-    const currentBrandInput = document.querySelector('.main form input[name=brand]:checked');
-    const nextBrandInput = document.querySelector('.main form input[name=brand]:checked + input[name=brand]');
-    const currentColorInput = document.querySelector('.main form input[name=color]:checked');
-    const currentSpeedInput = document.querySelector('.main form input[name=speed]:checked');
-    const firstBrandInput = document.querySelector('.main form input[name=brand]:first-of-type');
-    const firstColorInput = document.querySelector('.main form input[name=color]:first-of-type');
-    const firstSpeedInput = document.querySelector('.main form input[name=speed]:first-of-type');
-    
-
-    if (nextBrandInput && nextColorInput && nextSpeedInput) {
-      nextBrandInput.checked = true;
-      currentBrandInput.disabled = true;
-      nextColorInput.checked = true;
-      currentColorInput.disabled = true;
-      nextSpeedInput.checked = true;
-      currentSpeedInput.disabled = true;
-    } else {
-      firstBrandInput.checked = true;
-      currentBrandInput.disabled = true;
-      firstColorInput.checked = true;
-      currentColorInput.disabled = true;
-      firstSpeedInput.checked = true;
-      currentSpeedInput.disabled = true;
-    };
+    brandInput.disabled = true;
+    brandInput.checked = false;
+    colorInput.disabled = true;
+    colorInput.checked = false;
+    speedInput.disabled = true;
+    speedInput.checked = false;
 };
 });
  
@@ -126,7 +105,7 @@ btnRandom.addEventListener('click', function() {
   userMessage.textContent = 'Ready to Go!';
   const brands = Object.keys(carImages);
   const colors = Object.keys(carImages[brands[0]]);
-  const speeds = [3, 6, 9, 12];
+  const speeds = [5, 7, 9, 11];
 
   let availableBrands = [...brands];
   let availableColors = [...colors];
@@ -230,16 +209,8 @@ btnStart.addEventListener('click', function() {
             if(arrWinners.length === 4) {
               userMessage.innerHTML = 'Winner: ' + arrWinners[0].color + '<br>Second place: ' + arrWinners[1].color + '<br>Third place: ' + arrWinners[2].color;
               btnReset.disabled = false;
-
-              arrWinners.forEach((winner, index) => {
-                const winnerNumberImage = document.createElement('img');
-                winnerNumberImage.src = `img/${index + 1}.png`; 
-                winnerNumberImage.className = 'winner-number';
-                winner.image.appendChild(winnerNumberImage); 
-              });
-              
-
             }
+
 
             
             };
@@ -268,3 +239,5 @@ function moveBG() {
 function stopBG() {
   cancelAnimationFrame(bgAnimation);
 };
+
+
