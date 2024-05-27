@@ -1,0 +1,41 @@
+body {
+	font-size:16px;
+}
+	
+div {
+	font-size:1em;
+    margin: 20px;
+}
+	
+thead tr:first-child {
+    font-size: 1.5em;
+	text-align: left;
+    background-color:#99FF99 !important;
+}
+
+th, td{
+	padding: 10px;
+}
+
+table tr:nth-child(even) {
+	background-color:#99FF99;
+}
+
+table tr:nth-child(odd) {
+	background-color:#99FFFF;
+
+}
+
+h1 {
+	margin-top:0px;
+}
+
+table {
+	width: 60%;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+    width: 200px;
+}
+
