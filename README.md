@@ -1,4 +1,4 @@
-# Chiwawa Race 🏎️
+# Chiwawa Race
 My very first JS project. A browser betting game with Chiwawa racing.
 
 ## Stack
