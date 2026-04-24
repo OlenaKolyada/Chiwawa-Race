@@ -6,10 +6,30 @@ const btnReset = document.querySelector('#btn__reset');
 const btnStart = document.querySelector('#btn__start');
 const raceTrack = document.querySelector('#race__track');
 const userMessage = document.querySelector('#user__message');
+const rotateOverlay = document.querySelector('#rotate__overlay');
 const BG_WIDTH = 2000;
 const BG_HEIGHT = 370;
 let finish = 0;
 let userGuess = undefined;
+
+function updateOrientationState() {
+  const isTouchDevice =
+    window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0;
+  const isPortrait = window.innerHeight > window.innerWidth;
+  const shouldShowRotateMessage = isTouchDevice && isPortrait;
+
+  document.body.classList.toggle('is-mobile-portrait', shouldShowRotateMessage);
+
+  if (rotateOverlay) {
+    rotateOverlay.setAttribute('aria-hidden', String(!shouldShowRotateMessage));
+  }
+}
+
+updateOrientationState();
+window.addEventListener('resize', updateOrientationState);
+window.addEventListener('orientationchange', updateOrientationState);
 
 // Начальное состояние кнопок
 btnReset.disabled = true;
