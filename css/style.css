@@ -185,17 +185,14 @@ a:nth-of-type(2):hover {
     line-height: 1.6;
 }
 
-body.is-mobile-portrait,
 body.is-mobile-blocked {
     overflow: hidden;
 }
 
-body.is-mobile-portrait .container,
 body.is-mobile-blocked .container {
     display: none;
 }
 
-body.is-mobile-portrait #rotate__overlay,
 body.is-mobile-blocked #rotate__overlay {
     display: flex;
 }

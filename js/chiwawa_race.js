@@ -21,20 +21,12 @@ function updateOrientationState() {
     navigator.maxTouchPoints > 0;
   const shortestSide = Math.min(window.innerWidth, window.innerHeight);
   const isBlockedMobile = isTouchDevice && shortestSide < MIN_SUPPORTED_VIEWPORT_SIDE;
-  const isPortrait = window.innerHeight > window.innerWidth;
-  const shouldShowRotateMessage = isTouchDevice && !isBlockedMobile && isPortrait;
 
   document.body.classList.toggle('is-mobile-blocked', isBlockedMobile);
-  document.body.classList.toggle('is-mobile-portrait', shouldShowRotateMessage);
 
   if (rotateOverlay && rotateMessage) {
-    rotateOverlay.setAttribute('aria-hidden', String(!(isBlockedMobile || shouldShowRotateMessage)));
-
-    if (isBlockedMobile) {
-      rotateMessage.innerHTML = 'Thanks for visiting! This game is currently available on a computer or tablet.';
-    } else {
-      rotateMessage.innerHTML = 'Please rotate your device<br />to landscape mode';
-    }
+    rotateOverlay.setAttribute('aria-hidden', String(!isBlockedMobile));
+    rotateMessage.innerHTML = 'Thanks for visiting! This game is currently available on a computer or tablet.';
   }
 }
 
