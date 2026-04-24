@@ -6,8 +6,9 @@ const btnReset = document.querySelector('#btn__reset');
 const btnStart = document.querySelector('#btn__start');
 const raceTrack = document.querySelector('#race__track');
 const userMessage = document.querySelector('#user__message');
-const raceTrackRect = raceTrack.getBoundingClientRect();
-const finish = raceTrackRect.width - 130;
+const BG_WIDTH = 2000;
+const BG_HEIGHT = 370;
+let finish = 0;
 let userGuess = undefined;
 
 // Начальное состояние кнопок
@@ -149,6 +150,8 @@ btnStart.addEventListener('click', function() {
     btnRandom.disabled = true;
     btnReset.disabled = true;
     btnStart.disabled = true;
+    const maxCarWidth = Math.max(...arrCars.map(car => car.imageOnTrack.offsetWidth));
+    finish = raceTrack.offsetWidth - maxCarWidth - 15;
     userMessage.innerHTML = `Your choice is:<br/><span class='guess'>${userGuess}</span><img src="img/chiwawa3.png" />`;
 
     function moveCar(car) {
@@ -160,7 +163,9 @@ btnStart.addEventListener('click', function() {
         car.positionX = posCar;
 
         if (posCar >= finish) {
+          car.imageOnTrack.style.left = finish + 'px';
           car.positionX = finish;
+          moveBG();
 
           const newWinner = {
             brand: car.brand,
@@ -175,6 +180,7 @@ btnStart.addEventListener('click', function() {
           stopBG();
         } else {
           car.imageOnTrack.style.left = posCar + 'px';
+          moveBG();
           if (posCar < finish) {
             requestAnimationFrame(move);
           }
@@ -204,22 +210,24 @@ btnStart.addEventListener('click', function() {
 
 // Функция движения фона
 let posBG = 0;
-let bgAnimation;
 
 function moveBG() {
-  
-  posBG -= 3.1;
+  const scaledBgWidth = BG_WIDTH * (raceTrack.offsetHeight / BG_HEIGHT);
+  const maxBgOffset = Math.max(0, scaledBgWidth - raceTrack.offsetWidth);
+  const leaderPosition = arrCars.reduce(function(maxPosition, car) {
+    return Math.max(maxPosition, Math.min(car.positionX, finish));
+  }, 0);
+  const raceProgress = finish > 0 ? leaderPosition / finish : 0;
+
+  posBG = -(maxBgOffset * raceProgress);
   raceTrack.style.backgroundPositionX = posBG + 'px';
-  bgAnimation = requestAnimationFrame(moveBG);
 }
 
 function stopBG() {
-  cancelAnimationFrame(bgAnimation);
-  posBG = 0;
+  moveBG();
 }
 
 function resetBG() {
-  cancelAnimationFrame(bgAnimation);
   raceTrack.style.backgroundPositionX = '0px';
   posBG = 0;
 }
