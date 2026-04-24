@@ -3,17 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script defer src="js/chiwawa_race.js?v=3"></script>
-    <link rel="stylesheet" href="css/style.css">
+    <script defer src="js/chiwawa_race.js?v=4"></script>
+    <link rel="stylesheet" href="css/style.css?v=3">
     <link rel="stylesheet" href="https://use.typekit.net/twz1xmt.css">
     <title>Chiwawa Race</title>
   </head>
   <body>
-  <div id="rotate__overlay">
-    <div class="rotate__icon">📱</div>
-    <p>Please rotate your device<br />to landscape mode</p>
-  </div>
-  <div class="container">
+    <div id="rotate__overlay" aria-hidden="true">
+      <div class="rotate__icon">&#128241;</div>
+      <p id="rotate__message">Please rotate your device<br />to landscape mode</p>
+    </div>
+    <div class="container">
       <div id="race__track"></div>
       <div id="user__message">
           <span class="red">Welcome to Chiwawa Race!</span><br />
@@ -33,8 +33,7 @@
           <a href="download/Chiwawa_Race.zip">Chiwawa Race</a>
       </div>
 
-      <div id="copyright">© Funky Corgi<br />2023 - 2024</div>
-  </div>
-</body>
+      <div id="copyright">&copy; Funky Corgi<br />2023 - 2024</div>
+    </div>
+  </body>
 </html>
-

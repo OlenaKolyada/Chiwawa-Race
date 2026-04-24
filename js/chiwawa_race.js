@@ -7,8 +7,10 @@ const btnStart = document.querySelector('#btn__start');
 const raceTrack = document.querySelector('#race__track');
 const userMessage = document.querySelector('#user__message');
 const rotateOverlay = document.querySelector('#rotate__overlay');
+const rotateMessage = document.querySelector('#rotate__message');
 const BG_WIDTH = 2000;
 const BG_HEIGHT = 370;
+const MIN_SUPPORTED_VIEWPORT_SIDE = 600;
 let finish = 0;
 let userGuess = undefined;
 
@@ -17,13 +19,22 @@ function updateOrientationState() {
     window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
     'ontouchstart' in window ||
     navigator.maxTouchPoints > 0;
+  const shortestSide = Math.min(window.innerWidth, window.innerHeight);
+  const isBlockedMobile = isTouchDevice && shortestSide < MIN_SUPPORTED_VIEWPORT_SIDE;
   const isPortrait = window.innerHeight > window.innerWidth;
-  const shouldShowRotateMessage = isTouchDevice && isPortrait;
+  const shouldShowRotateMessage = isTouchDevice && !isBlockedMobile && isPortrait;
 
+  document.body.classList.toggle('is-mobile-blocked', isBlockedMobile);
   document.body.classList.toggle('is-mobile-portrait', shouldShowRotateMessage);
 
-  if (rotateOverlay) {
-    rotateOverlay.setAttribute('aria-hidden', String(!shouldShowRotateMessage));
+  if (rotateOverlay && rotateMessage) {
+    rotateOverlay.setAttribute('aria-hidden', String(!(isBlockedMobile || shouldShowRotateMessage)));
+
+    if (isBlockedMobile) {
+      rotateMessage.innerHTML = 'This game is available only on screens<br />from 600px on the shortest side';
+    } else {
+      rotateMessage.innerHTML = 'Please rotate your device<br />to landscape mode';
+    }
   }
 }
 
@@ -82,7 +93,7 @@ btnRandom.addEventListener('click', function() {
   let availableSpeeds = [...speeds];
 
   // Создаем массив для хранения ссылок на изображения машинок
-   if (arrCars.length < 4) {
+  if (arrCars.length < 4) {
     for (let i = 0; i < 4; i++) {
       const brandIndex = Math.floor(Math.random() * availableBrands.length);
       const brand = availableBrands.splice(brandIndex, 1)[0];
@@ -93,11 +104,11 @@ btnRandom.addEventListener('click', function() {
       const imageSrc = carImages[brand][color];
 
       const carImageRaceTrack = document.createElement('img');
-      carImageRaceTrack.src = "img/" + imageSrc;
+      carImageRaceTrack.src = 'img/' + imageSrc;
       raceTrack.appendChild(carImageRaceTrack);
 
       const carImageUserMsg = document.createElement('img');
-      carImageUserMsg.src = "img/" + imageSrc;
+      carImageUserMsg.src = 'img/' + imageSrc;
       userMessage.appendChild(carImageUserMsg);
 
       const car = {
@@ -117,28 +128,28 @@ btnRandom.addEventListener('click', function() {
     let fourthCar = arrCars[3].imageForGuess;
 
     firstCar.addEventListener('click', function() {
-      userGuess = (arrCars[0].color + ' ' + arrCars[0].brand);
+      userGuess = arrCars[0].color + ' ' + arrCars[0].brand;
       userMessage.innerHTML = `You think <span class='guess'>${userGuess}</span> will win?<br />Press Start and let's see!`;
       userMessage.appendChild(firstCar);
       btnStart.disabled = false;
-    });    
+    });
 
     secondCar.addEventListener('click', function() {
-      userGuess = (arrCars[1].color + ' ' + arrCars[1].brand);
+      userGuess = arrCars[1].color + ' ' + arrCars[1].brand;
       userMessage.innerHTML = `You think <span class='guess'>${userGuess}</span> will win?<br />Press Start and let's see!`;
       userMessage.appendChild(secondCar);
       btnStart.disabled = false;
     });
 
     thirdCar.addEventListener('click', function() {
-      userGuess = (arrCars[2].color + ' ' + arrCars[2].brand);
+      userGuess = arrCars[2].color + ' ' + arrCars[2].brand;
       userMessage.innerHTML = `You think <span class='guess'>${userGuess}</span> will win?<br />Press Start and let's see!`;
       userMessage.appendChild(thirdCar);
       btnStart.disabled = false;
     });
 
     fourthCar.addEventListener('click', function() {
-      userGuess = (arrCars[3].color + ' ' + arrCars[3].brand);
+      userGuess = arrCars[3].color + ' ' + arrCars[3].brand;
       userMessage.innerHTML = `You think <span class='guess'>${userGuess}</span> will win?<br />Press Start and let's see!`;
       userMessage.appendChild(fourthCar);
       btnStart.disabled = false;
@@ -176,7 +187,7 @@ btnStart.addEventListener('click', function() {
 
     function moveCar(car) {
       let posCar = car.positionX;
-      let carSpeed = parseInt(car.speed);
+      let carSpeed = parseInt(car.speed, 10);
 
       function move() {
         posCar += carSpeed;
@@ -194,7 +205,7 @@ btnStart.addEventListener('click', function() {
             imageOnTrack: car.imageOnTrack,
             imageForGuess: car.imageForGuess,
             positionX: finish,
-            };
+          };
 
           arrWinners.push(newWinner);
           stopBG();
@@ -207,18 +218,17 @@ btnStart.addEventListener('click', function() {
         }
 
         // Проверяем, завершена ли гонка и выводим сообщение о результате
-        if(arrWinners.length === 4) {
+        if (arrWinners.length === 4) {
+          btnReset.disabled = false;
 
-            btnReset.disabled = false;
-
-            if(userGuess === (arrWinners[0].color + ' ' + arrWinners[0].brand)) {
-              userMessage.innerHTML = '<span class="red">✩✰☆ You won! ☆✰✩</span><br /><br /><span class="first__place">First place: ' + arrWinners[0].color + ' ' + arrWinners[0].brand + '</span><br>Second place: ' + arrWinners[1].color + ' ' + arrWinners[1].brand + '<br>Third place: ' + arrWinners[2].color + ' ' + arrWinners[2].brand;
-
-            } else {
-              userMessage.innerHTML = "<span class='blue'>You didn't win ☹️</span><br /><br /><span class='first__place'>First place: " + arrWinners[0].color + ' ' + arrWinners[0].brand + '</span><br>Second place: ' + arrWinners[1].color + ' ' + arrWinners[1].brand + '<br>Third place: ' + arrWinners[2].color + ' ' + arrWinners[2].brand;
-            }
-        };
+          if (userGuess === arrWinners[0].color + ' ' + arrWinners[0].brand) {
+            userMessage.innerHTML = '<span class="red">✩✰☆ You won! ☆✰✩</span><br /><br /><span class="first__place">First place: ' + arrWinners[0].color + ' ' + arrWinners[0].brand + '</span><br>Second place: ' + arrWinners[1].color + ' ' + arrWinners[1].brand + '<br>Third place: ' + arrWinners[2].color + ' ' + arrWinners[2].brand;
+          } else {
+            userMessage.innerHTML = "<span class='blue'>You didn't win ☹️</span><br /><br /><span class='first__place'>First place: " + arrWinners[0].color + ' ' + arrWinners[0].brand + '</span><br>Second place: ' + arrWinners[1].color + ' ' + arrWinners[1].brand + '<br>Third place: ' + arrWinners[2].color + ' ' + arrWinners[2].brand;
+          }
+        }
       }
+
       move();
     }
 
