@@ -31,7 +31,7 @@ function updateOrientationState() {
     rotateOverlay.setAttribute('aria-hidden', String(!(isBlockedMobile || shouldShowRotateMessage)));
 
     if (isBlockedMobile) {
-      rotateMessage.innerHTML = 'This game is available only on screens<br />from 600px on the shortest side';
+      rotateMessage.innerHTML = 'Thanks for visiting! This game is currently available on a computer or tablet.';
     } else {
       rotateMessage.innerHTML = 'Please rotate your device<br />to landscape mode';
     }
